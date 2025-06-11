@@ -6,6 +6,7 @@ import scoresRoutes from './routes/scores.route.js';
 import questionsRoutes from './routes/questions.route.js';
 import answersRoutes from './routes/answers.route.js';
 import { connectDB } from './config/db.js';
+import { seed } from './seed.js';
 
 dotenv.config();
 
@@ -36,4 +37,12 @@ connectDB()
   })
   .catch((error) => {
     console.error('Erro ao conectar ao MongoDB', error);
+  });
+
+seed()
+.then(() => {
+      console.log(`Dados importados`); 
+  })
+  .catch((error) => {
+    console.error('Erro ao importar dados', error);
   });
