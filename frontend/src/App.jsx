@@ -18,7 +18,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-<<<<<<< HEAD
+
     const savedUser = localStorage.getItem('user');
     if (savedUser && savedUser !== 'undefined') {
       try {
@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   if (loading) return null;
-=======
+
     const raw = localStorage.getItem('user');
     // Se não existir, ou for a string "undefined", nem tenta fazer parse
     if (!raw || raw === 'undefined') {
@@ -46,7 +46,7 @@ function App() {
     }
   }, []);
 
->>>>>>> 8b5c13c (ivo)
+
 
   return (
     <>
