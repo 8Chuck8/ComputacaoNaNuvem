@@ -78,7 +78,6 @@ export async function seed() {
   } catch (err) {
     console.error('❌ Erro ao inserir perguntas:', err);
     process.exit(1);
-  }
 });
 }
 
