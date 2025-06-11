@@ -1,0 +1,117 @@
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #1e1e1e;
+  color: white;
+}
+
+#menu,
+#fim-jogo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 20;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(20, 30px);
+  grid-template-rows: repeat(20, 30px);
+  gap: 2px;
+  position: relative;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: #2e2e2e;
+  border: 1px solid #444;
+  position: relative;
+  cursor: pointer;
+}
+
+.cell.corredor {
+  background-color: #333;
+}
+
+.cell.servidor {
+  background-image: url('../../images/servidor.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.cell.problema {
+  background-image: url('../../images/alerta.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.cell.player {
+  background-image: url('../../images/personagem.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 100;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 90;
+}
+
+#popup button,
+#fim-jogo button,
+#menu button {
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin: 5px 0;
+}
+
+#feedback {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#timer {
+  margin-top: 10px;
+  font-size: 18px;
+  text-align: center;
+}

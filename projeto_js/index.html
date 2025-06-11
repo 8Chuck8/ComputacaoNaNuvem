@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Datacenter Didático</title>
+        <link rel="stylesheet" href="assets/css/style.css" />
+    </head>
+    <body>
+        <div id="menu">
+            <h1>Datacenter Didático</h1>
+            <p>Bem-vindo! Resolve os problemas do datacenter.</p>
+            <button onclick="iniciarJogo()">Iniciar Jogo</button>
+        </div>
+
+        <div id="fim-jogo" style="display: none;">
+            <h2>Parabéns!</h2>
+            <p id="mensagem-final"></p>
+            <button onclick="reiniciarJogo()">Recomeçar</button>
+            <button onclick="voltarAoMenu()">Menu Principal</button>
+        </div>
+
+        <div id="overlay"></div>
+
+        <div id="popup">
+            <p id="pergunta-problema"><strong>Problema:</strong></p>
+            <p id="pergunta-texto"><strong>Pergunta:</strong></p>
+            <div id="opcoes"></div>
+            <button onclick="verificarResposta()">Submeter</button>
+            <p id="feedback"></p>
+        </div>
+
+        <p id="timer" style="display: none;">Tempo: 0s</p>
+
+        <div id="container">
+            <div id="grid" style="display: none;"></div>
+        </div>
+
+        <script src="assets/js/script.js"></script>
+    </body>
+</html>
