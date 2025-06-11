@@ -61,7 +61,7 @@ const perguntas = [
   }
 ];
 
-async function seed() {
+export async function seed() {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/datacenter', {
       useNewUrlParser: true,
@@ -79,4 +79,3 @@ async function seed() {
   }
 }
 
-seed();
