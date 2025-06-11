@@ -7,7 +7,7 @@ export const useAuthApi = create((set) => ({
         console.log("EMAIL", email);
         console.log("PASSWORD", password);
 
-        const res = await fetch("/api/users/login", {
+        const res = await fetch("https://computacaonanuvem.onrender.com/api/users/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -27,7 +27,7 @@ export const useAuthApi = create((set) => ({
             return {success: false, message: "Please provide all fields"};
         }
 
-        const res = await fetch("/api/users", {
+        const res = await fetch("https://computacaonanuvem.onrender.com/api/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" 
