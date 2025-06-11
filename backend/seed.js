@@ -61,12 +61,12 @@ const perguntas = [
   }
 ];
 
-export async function seed() {
+async function seed() {
   try {
-    //await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/datacenter', {
-    //  useNewUrlParser: true,
-    //  useUnifiedTopology: true,
-    //});
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/datacenter', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
     await Question.deleteMany(); // Limpa perguntas antigas
     await Question.insertMany(perguntas);
@@ -79,3 +79,4 @@ export async function seed() {
   }
 }
 
+seed();
