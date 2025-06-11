@@ -18,35 +18,21 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const savedUser = localStorage.getItem('user');
     if (savedUser && savedUser !== 'undefined') {
       try {
         setUser(JSON.parse(savedUser));
       } catch (error) {
-        console.error('Error parsing user from localStorage:', error);
+        console.error('Erro a fazer parse do user:', error);
+        localStorage.removeItem('user');
       }
+    } else {
+      localStorage.removeItem('user');
     }
     setLoading(false);
   }, []);
 
   if (loading) return null;
-
-    const raw = localStorage.getItem('user');
-    // Se não existir, ou for a string "undefined", nem tenta fazer parse
-    if (!raw || raw === 'undefined') {
-      localStorage.removeItem('user');
-      return;
-    }
-    try {
-      setUser(JSON.parse(raw));
-    } catch (err) {
-      console.warn('user inválido no localStorage:', raw);
-      localStorage.removeItem('user');
-    }
-  }, []);
-
-
 
   return (
     <>
@@ -60,23 +46,24 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {
-          user ? <>
-            {
-              user.role === 'admin' &&
+        {user ? (
+          <>
+            {user.role === 'admin' && (
               <Route path="/admin" element={<Admin />} />
-            }
+            )}
             <Route path="/scores" element={<Scores user={user} />} />
             <Route path="/logout" element={<Logout setUser={setUser} />} />
           </>
-            : <>
-              <Route path="/login" element={<Login setUser={setUser} />} />
-              <Route path="/register" element={<Register setUser={setUser} />} />
-            </>
-        }
+        ) : (
+          <>
+            <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/register" element={<Register setUser={setUser} />} />
+          </>
+        )}
       </Routes>
     </>
-  )
+  );
 }
+
 
 export default App
