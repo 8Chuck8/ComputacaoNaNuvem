@@ -4,7 +4,7 @@ export const useAnswerApi = create((set) => ({
     answers: [],
     setAnswers: (answers) => set({answers}),
     getAnswers: async () => {
-        const res = await fetch("/api/answers");
+        const res = await fetch("https://computacaonanuvem.onrender.com/api/answers");
         const data = await res.json();
         console.log("Fetched answers:", data);
         set({answers: data.data});
@@ -14,7 +14,7 @@ export const useAnswerApi = create((set) => ({
             return {success: false, message: "Please provide all fields"};
         }
 
-        const res = await fetch("/api/answers", {
+        const res = await fetch("https://computacaonanuvem.onrender.com/api/answers", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" 
