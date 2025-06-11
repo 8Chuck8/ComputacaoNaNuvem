@@ -61,7 +61,7 @@ const perguntas = [
   }
 ];
 
-async function seed() {
+export async function seed() {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/datacenter', {
       useNewUrlParser: true,
@@ -77,6 +77,8 @@ async function seed() {
     console.error('❌ Erro ao inserir perguntas:', err);
     process.exit(1);
   }
+  mongoose.connection.close(function () {
+  console.log('Mongoose default connection closed');
+});
 }
 
-seed();
