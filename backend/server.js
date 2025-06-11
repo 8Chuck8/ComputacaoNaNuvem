@@ -6,6 +6,7 @@ import scoresRoutes from './routes/scores.route.js';
 import questionsRoutes from './routes/questions.route.js';
 import answersRoutes from './routes/answers.route.js';
 import { connectDB } from './config/db.js';
+import { seed } from './seed.js';
 
 dotenv.config();
 
@@ -27,6 +28,14 @@ app.use('/api/answers', answersRoutes);
 app.use('/api/questions', questionsRoutes);
 
 console.log(process.env.MONGO_URI);
+
+seed()
+.then(() => {
+      console.log(`Dados importados`);
+  })
+  .catch((error) => {
+    console.error('Erro ao importar dados!!', error);
+  });
 
 connectDB()
   .then(() => {
