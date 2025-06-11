@@ -71,7 +71,6 @@ export async function seed() {
     await Question.deleteMany(); // Limpa perguntas antigas
     await Question.insertMany(perguntas);
 
-    mongoose.disconect();
     console.log('✅ Perguntas inseridas com sucesso!');
     process.exit();
   } catch (err) {
