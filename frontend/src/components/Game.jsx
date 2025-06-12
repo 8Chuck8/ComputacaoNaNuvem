@@ -52,8 +52,8 @@ export default function Game({ user }) {
   const iniciar = async () => {
     try {
       const [qRes, aRes] = await Promise.all([
-        fetch(`${API}/questions`),
-        fetch(`${API}/answers`)
+        fetch(`${API}/api/questions`),
+        fetch(`${API}/api/answers`)
       ]);
       const qs = await qRes.json();
       const as = await aRes.json();
@@ -137,7 +137,7 @@ export default function Game({ user }) {
       setFeedback('');
       if (!indices.length) {
         clearInterval(intv);
-        await fetch(`${API}/scores`, {
+        await fetch(`${API}/api/scores`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
