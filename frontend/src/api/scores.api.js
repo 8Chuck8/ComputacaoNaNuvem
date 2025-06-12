@@ -1,15 +1,17 @@
 import { create } from 'zustand'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useScoreApi = create((set) => ({
     scores: [],
     setScores: (scores) => set({ scores }),
     getScores: async () => {
-        const res = await fetch("/api/scores");
+        const res = await fetch("${API_URL}/api/scores");
         const data = await res.json();
         set({ scores: data.data });
     },
     getScoresByUserId: async (id) => {
-        const res = await fetch(`/api/scores/user/${id}`);
+        const res = await fetch(`${API_URL}/api/scores/user/${id}`);
         const data = await res.json();
         if (data.success) {
             set({ scores: data.data });
@@ -20,7 +22,7 @@ export const useScoreApi = create((set) => ({
             return { success: false, message: "Please provide all fields" };
         }
 
-        const res = await fetch("/api/scores", {
+        const res = await fetch("${API_URL}/api/scores", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
