@@ -25,11 +25,15 @@ export const createAnswer = async (req,res) => {
     console.log('req.body:', req.body);
     const answer = req.body;
 
-    if (!answer.answer || !answer.question_id) {
+    if (!answer.a_answer || !answer.q_id) {
         return res.status(400).json({ success: false, message: 'Please provide all fields' });
     }
 
-    const newAnswer = new Answer(answer);
+    const newAnswer = new Answer({
+        a_answer: answer.a_answer,
+        a_correct: answer.a_correct || 0,
+        q_id: answer.q_id
+    });
 
     try {
         await newAnswer.save();
