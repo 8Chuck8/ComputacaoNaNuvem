@@ -6,7 +6,7 @@ export const useUserApi = create((set) => ({
     users: [],
     setUsers: (users) => set({users}),
     getUsers: async () => {
-        const res = await fetch("${API_URL}/api/users");
+        const res = await fetch(`${API_URL}/api/users`);
         const data = await res.json();
         set({users: data.data});
     },
@@ -15,7 +15,7 @@ export const useUserApi = create((set) => ({
             return {success: false, message: "Please provide all fields"};
         }
 
-        const res = await fetch("${API_URL}/api/users", {
+        const res = await fetch(`${API_URL}/api/users`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" 
