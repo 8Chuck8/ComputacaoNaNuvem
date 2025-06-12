@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Question from '../models/question.model.js';
+import { updateQuestion, deleteQuestion } from '../controllers/questions.controller.js';
 
 const router = Router();
 
@@ -23,5 +24,8 @@ router.post('/', async (req, res) => {
     res.status(400).json({ success: false, error: err.message });
   }
 });
+
+router.put('/:id', updateQuestion); 
+router.delete('/:id', deleteQuestion);
 
 export default router;
