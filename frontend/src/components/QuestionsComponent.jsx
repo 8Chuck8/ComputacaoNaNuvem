@@ -11,7 +11,8 @@ const QuestionsComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("add");
   const [selectedQuestion, setSelectedQuestion] = useState(null);
-
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  
   useEffect(() => {
     getQuestions();
   }, []);
@@ -20,7 +21,7 @@ const QuestionsComponent = () => {
     const fetchAnswersForQuestions = async () => {
       const enrichedQuestions = await Promise.all(
         questions.map(async (q) => {
-          const res = await fetch(`/api/answers/question/${q._id}`);
+          const res = await fetch(`${API}/api/answers/question/${q._id}`);
           const data = await res.json();
           return {
             _id: q._id,
@@ -48,7 +49,7 @@ const QuestionsComponent = () => {
         if (!question) return;
 
         try {
-            const res = await fetch(`/api/answers/question/${id}`);
+            const res = await fetch(`${API}/api/answers/question/${id}`);
             const data = await res.json();
 
             const answers = data.data.map((a) => ({
@@ -70,7 +71,7 @@ const QuestionsComponent = () => {
 
 
   const handleDelete = async (id) => {
-    const res = await fetch(`/api/questions/${id}`, { method: "DELETE" });
+    const res = await fetch(`${API}/api/questions/${id}`, { method: "DELETE" });
     const data = await res.json();
     if (data.success) {
       toast.success("Question deleted");
@@ -95,7 +96,7 @@ const QuestionsComponent = () => {
     console.log("PAYLOAD",payload);
 
     const method = modalMode === "edit" ? "PUT" : "POST";
-    const url = `/api/questions${modalMode === "edit" ? `/${form._id}` : ""}`;
+    const url = `${API}/api/questions${modalMode === "edit" ? `/${form._id}` : ""}`;
 
     const res = await fetch(url, {
         method,
