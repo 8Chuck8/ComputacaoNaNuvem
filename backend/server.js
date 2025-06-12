@@ -15,7 +15,7 @@ app.use(express.json());
 
 // ─── Registar CORS ─────────────────────────────────────
 app.use(cors({
-  origin: 'http://localhost:5173'         // ou '*' para permitir todas as origens
+  origin: 'https://computacao-na-nuvem.vercel.app/'         // ou '*' para permitir todas as origens
 }));
 // ───────────────────────────────────────────────────────
 
