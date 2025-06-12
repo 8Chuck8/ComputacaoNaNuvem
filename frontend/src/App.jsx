@@ -23,11 +23,8 @@ function App() {
       try {
         setUser(JSON.parse(savedUser));
       } catch (error) {
-        console.error('Erro a fazer parse do user:', error);
-        localStorage.removeItem('user');
+        console.error('Error parsing user from localStorage:', error);
       }
-    } else {
-      localStorage.removeItem('user');
     }
     setLoading(false);
   }, []);
@@ -36,34 +33,33 @@ function App() {
 
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser}/>
 
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
+      <Toaster 
+      position="top-right"
+      reverseOrder={false}
       />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-
-        {user ? (
-          <>
-            {user.role === 'admin' && (
-              <Route path="/admin" element={<Admin />} />
-            )}
-            <Route path="/scores" element={<Scores user={user} />} />
-            <Route path="/logout" element={<Logout setUser={setUser} />} />
+        <Route path="/" element={<Home />}/>
+        
+        {
+          user ? <>
+              {
+                user.role === 'admin' &&
+                <Route path="/admin" element={<Admin />}/>
+              }
+              <Route path="/scores" element={<Scores user={user}/>}/>
+              <Route path="/logout" element={<Logout setUser={setUser}/>}/>
           </>
-        ) : (
-          <>
-            <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/register" element={<Register setUser={setUser} />} />
-          </>
-        )}
+          : <>
+              <Route path="/login" element={<Login setUser={setUser}/>}/>
+              <Route path="/register" element={<Register setUser={setUser}/>}/>
+            </>
+        }
       </Routes>
     </>
-  );
+  )
 }
-
 
 export default App

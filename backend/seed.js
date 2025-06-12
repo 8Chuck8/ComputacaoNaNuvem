@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Question from './models/question.model.js';
 
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const perguntas = [
   {
     problema: "Servidor desligado",
-    pergunta: "Qual é o primeiro passo ao encontrar um servidor desligado?",
+    q_question: "Qual é o primeiro passo ao encontrar um servidor desligado?",
     opcoes: [
       { texto: "Chamar o gerente", correta: false },
       { texto: "Verificar se está ligado à corrente", correta: true },
@@ -16,7 +16,7 @@ const perguntas = [
   },
   {
     problema: "Rede lenta",
-    pergunta: "O que pode causar lentidão na rede?",
+    q_question: "O que pode causar lentidão na rede?",
     opcoes: [
       { texto: "Café derramado no teclado", correta: false },
       { texto: "Congestionamento de tráfego", correta: true },
@@ -25,7 +25,7 @@ const perguntas = [
   },
   {
     problema: "Disco cheio",
-    pergunta: "Como resolver um disco cheio?",
+    q_question: "Como resolver um disco cheio?",
     opcoes: [
       { texto: "Apagar ficheiros desnecessários", correta: true },
       { texto: "Desligar o servidor", correta: false },
@@ -34,7 +34,7 @@ const perguntas = [
   },
   {
     problema: "Erro de autenticação",
-    pergunta: "Qual é a causa comum de erro de autenticação?",
+    q_question: "Qual é a causa comum de erro de autenticação?",
     opcoes: [
       { texto: "Palavra-passe errada", correta: true },
       { texto: "Falta de RAM", correta: false },
@@ -43,7 +43,7 @@ const perguntas = [
   },
   {
     problema: "Falha de energia",
-    pergunta: "Qual o dispositivo que evita falhas de energia?",
+    q_question: "Qual o dispositivo que evita falhas de energia?",
     opcoes: [
       { texto: "Extensão múltipla", correta: false },
       { texto: "UPS (Fonte de alimentação ininterrupta)", correta: true },
@@ -52,7 +52,7 @@ const perguntas = [
   },
   {
     problema: "Superaquecimento",
-    pergunta: "O que fazer se o servidor estiver a aquecer demasiado?",
+    q_question: "O que fazer se o servidor estiver a aquecer demasiado?",
     opcoes: [
       { texto: "Tapar as entradas de ar", correta: false },
       { texto: "Verificar o sistema de ventilação", correta: true },
@@ -61,12 +61,9 @@ const perguntas = [
   }
 ];
 
-export async function seed() {
+async function seed() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/datacenter', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/datacenter');
 
     await Question.deleteMany(); // Limpa perguntas antigas
     await Question.insertMany(perguntas);
@@ -78,3 +75,5 @@ export async function seed() {
     process.exit(1);
   }
 }
+
+seed();

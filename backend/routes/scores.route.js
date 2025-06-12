@@ -1,4 +1,4 @@
-import { Router } from 'express';
+/* import { Router } from 'express';
 import Score from '../models/score.model.js';
 
 const router = Router();
@@ -23,5 +23,16 @@ router.post('/', async (req, res) => {
     res.status(400).json({ success: false, error: err.message });
   }
 });
+
+export default router; */
+
+import { Router } from 'express';
+import { getScores, getScoresByUserId, createScore } from '../controllers/scores.controller.js';
+
+const router = Router();
+
+router.get('/', getScores);
+router.get('/user/:id', getScoresByUserId);
+router.post('/', createScore);
 
 export default router;

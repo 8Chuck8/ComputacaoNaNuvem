@@ -1,44 +1,51 @@
-import { useEffect } from "react";
-import { useScoreApi } from "../api/scores.api";
-import DataTableComponent from "../components/DataTable";
+import { useEffect, useState } from "react";
 
-const Scores = (props) => {
-    const { getScoresByUserId, scores } = useScoreApi();
-    
-      useEffect(() => {
-          const fetchData = async () => {
-              await getScoresByUserId(props.user._id);
-          };
-          fetchData();
-      }, []);
-    
-      const contentHeaders = scores.length > 0
-            ? ["username", "score", "time", "date"]
-            : [];
-    
-      const scores_data = scores.map((score) => ({
-          username: score.user_id.username,
-          score: score.score,
-          time: score.time,
-          date: score.createdAt
-      }));
-    
-      return (
-          <>
-            <div className='d-flex justify-content-center align-items-center shadow m-4 p-4 rounded'>
-                {scores_data.length > 0 ? (
-                    <div className="table-responsive w-100">
-                        <DataTableComponent
-                            content_data={scores_data}
-                            content_headers={contentHeaders}
-                        />
-                    </div>
-                ) : (
-                    <h3>There are no scores yet</h3>
-                )}
-            </div>
-          </>
-      );
-}
+const Scores = () => {
+  const [scores, setScores] = useState([]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user?._id) return;
+
+    fetch(`/api/scores/user/${user._id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setScores(data.data);
+      });
+  }, []);
+
+  return (
+    <div className="container-fluid bg-dark text-white min-vh-100 py-4">
+      <h2 className="mb-4 text-center">My Scores</h2>
+
+      {scores.length > 0 ? (
+        <div className="table-responsive">
+          <table className="table table-dark table-striped table-bordered text-center align-middle">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Score</th>
+                <th>Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scores.map((score, i) => (
+                <tr key={i}>
+                  <td>{score.user_id?.username || "Unknown"}</td>
+                  <td>{score.score}</td>
+                  <td>{score.time}s</td>
+                  <td>{new Date(score.createdAt).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-center">No scores to display.</p>
+      )}
+    </div>
+  );
+};
 
 export default Scores;

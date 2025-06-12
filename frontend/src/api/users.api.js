@@ -23,6 +23,6 @@ export const useUserApi = create((set) => ({
 
         const data = await res.json();
         set((state) => ({users: [...state.users, data.data]}));
-        return {success: true, data: newUser, message: "User created successfully"};
+        return {success: true, data: data.data, message: "User created successfully"};
     },
 }));

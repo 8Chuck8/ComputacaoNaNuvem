@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuthApi } from "../api/auth.api";
 import { Link, useNavigate } from "react-router-dom";
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const Login = (props) => {
-    
+
     const navigate = useNavigate();
-    const {login, user} = useAuthApi();
+    const { login, user } = useAuthApi();
 
     const [data, setData] = useState({
         email: '',
@@ -16,8 +16,8 @@ const Login = (props) => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        const {email, password} = data;
-        
+        const { email, password } = data;
+
         if (!email || !password) {
             toast.error('Please provide all fields');
             return;
@@ -28,7 +28,15 @@ const Login = (props) => {
             if (res.success) {
                 const userData = res.data;
                 props.setUser(userData);
-                localStorage.setItem('user', JSON.stringify(userData));
+                //localStorage.setItem('user', JSON.stringify(userData));
+                const userToStore = {
+                    _id: userData._id,
+                    u_name: userData.username,
+                    email: userData.email
+                };
+
+                localStorage.setItem('user', JSON.stringify(userToStore));
+                props.setUser(userToStore);
 
                 navigate('/');
                 toast.success('User successfully logged in');
@@ -53,7 +61,7 @@ const Login = (props) => {
                         id="email"
                         placeholder="name@example.com"
                         value={data.email}
-                        onChange={(e) => setData({...data, email: e.target.value})}
+                        onChange={(e) => setData({ ...data, email: e.target.value })}
                     />
                     <label htmlFor="email">Email address</label>
                 </div>
@@ -64,7 +72,7 @@ const Login = (props) => {
                         id="password"
                         placeholder="Password"
                         value={data.password}
-                        onChange={(e) => setData({...data, password: e.target.value})}
+                        onChange={(e) => setData({ ...data, password: e.target.value })}
                     />
                     <label htmlFor="password">Password</label>
                 </div>

@@ -1,4 +1,4 @@
-import Score from '../models/score.model.js';
+/* import Score from '../models/score.model.js';
 import mongoose from 'mongoose';
 
 export const getScores =  async (req, res) => {
@@ -72,4 +72,45 @@ export const updateScore = async (req, res) => {
         res.status(500).json({success:true, message: "Server error"});
 
     }
-}
+} */
+
+import Score from '../models/score.model.js';
+
+export const getScores = async (req, res) => {
+  try {
+    const scores = await Score.find({}).populate('user_id', 'username');
+    res.status(200).json({ success: true, data: scores });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Erro ao obter scores' });
+  }
+};
+
+export const getScoresByUserId = async (req, res) => {
+  try {
+    console.log('User ID recebido:', req.params.id);
+
+    const scores = await Score.find({ user_id: req.params.id })
+                              .populate('user_id', 'username');
+    
+    console.log('Scores encontrados:', scores);
+    res.status(200).json({ success: true, data: scores });
+
+  } catch (error) {
+    console.error('Erro no getScoresByUserId:', error);
+    res.status(500).json({ success: false, message: 'Erro ao obter scores do utilizador' });
+  }
+};
+
+export const createScore = async (req, res) => {
+  const { user_id, score, time } = req.body;
+  if (!user_id || score == null || time == null) {
+    return res.status(400).json({ success: false, message: 'Campos obrigatórios em falta' });
+  }
+
+  try {
+    const newScore = await Score.create({ user_id, score, time });
+    res.status(201).json({ success: true, data: newScore });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Erro ao criar score' });
+  }
+};

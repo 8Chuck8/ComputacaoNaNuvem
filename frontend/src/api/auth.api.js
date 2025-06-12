@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 
 export const useAuthApi = create((set) => ({
-    user: [],
+    user: null,
     setUsers: (user) => set({user}),
     login: async (email, password) => {
         console.log("EMAIL", email);
