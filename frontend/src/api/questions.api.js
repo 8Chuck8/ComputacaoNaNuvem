@@ -6,7 +6,7 @@ export const useQuestionApi = create((set) => ({
     questions: [],
     setQuestions: (questions) => set({questions}),
     getQuestions: async () => {
-        const res = await fetch(`${API_URL}/api/questions`);
+        const res = await fetch(`${API_URL}/api/api/questions`);
         const data = await res.json();
         set({questions: data.data});
     },
