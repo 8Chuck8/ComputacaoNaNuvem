@@ -6,7 +6,7 @@ export const useAnswerApi = create((set) => ({
     answers: [],
     setAnswers: (answers) => set({answers}),
     getAnswers: async () => {
-        const res = await fetch(`${API_URL}/api/answers`);
+        const res = await fetch(`${API_URL}/api/api/answers`);
         const data = await res.json();
         console.log("Fetched answers:", data);
         set({answers: data.data});
