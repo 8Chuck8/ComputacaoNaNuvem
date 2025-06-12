@@ -18,9 +18,9 @@ const AnswersComponent = () => {
 
     
     const answers_data = answers.map((answer) => ({
-        answer: answer.answer,
-        correct: answer.correct ? 'True' : 'False',
-        question: answer.question_id?.question ?? "N/A"
+        answer: answer.a_answer,
+        correct: answer.a_correct ? 'True' : 'False',
+        question: answer.q_id ? answer.q_id.q_question : "N/A"
     }));
 
     return (<>
