@@ -6,6 +6,7 @@ import scoresRoutes from './routes/scores.route.js';
 import questionsRoutes from './routes/questions.route.js';
 import answersRoutes from './routes/answers.route.js';
 import { connectDB } from './config/db.js';
+import Question from './models/question.model.js';
 
 dotenv.config();
 
