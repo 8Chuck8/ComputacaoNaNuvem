@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const API_URL = "https://computacaonanuvem.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const useScoreApi = create((set) => ({
     scores: [],
