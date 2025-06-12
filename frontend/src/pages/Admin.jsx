@@ -5,7 +5,7 @@ import AnswersComponent from '../components/AnswersComponent';
 import ScoresComponent from '../components/ScoresComponent';
 
 const Admin = () => {
-  const items = ['users', 'questions', 'answers', 'scores'];
+  const items = ['users', 'questions'];
   const [display, setDisplay] = useState('users');
 
   const handleDisplayChange = (e) => {
@@ -35,8 +35,7 @@ const Admin = () => {
       <div className='d-flex justify-content-center align-items-center shadow m-4 p-4 rounded'>
         {display === 'users' && <UsersComponent />}
         {display === 'questions' && <QuestionsComponent />}
-        {display === 'answers' && <AnswersComponent />}
-        {display === 'scores' && <ScoresComponent />}
+        {/* {display === 'scores' && <ScoresComponent />} */}
       </div>
     </>
   );

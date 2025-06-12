@@ -10,12 +10,6 @@ export default function Game({ user }) {
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user || !user._id) {
-      navigate('/login');
-    }
-  }, [user]);
-
 
   const [mapa, setMapa] = useState([]);
   const [px, setPx] = useState(0);
@@ -58,8 +52,8 @@ export default function Game({ user }) {
   const iniciar = async () => {
     try {
       const [qRes, aRes] = await Promise.all([
-        fetch(`${API}/api/questions`),
-        fetch(`${API}/api/answers`)
+        fetch(`${API}/questions`),
+        fetch(`${API}/answers`)
       ]);
       const qs = await qRes.json();
       const as = await aRes.json();
@@ -143,7 +137,7 @@ export default function Game({ user }) {
       setFeedback('');
       if (!indices.length) {
         clearInterval(intv);
-        await fetch(`${API}/api/scores`, {
+        await fetch(`${API}/scores`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

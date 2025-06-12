@@ -31,12 +31,20 @@ const Register = (props) => {
 
         try {
             const res = await register(data); 
-            props.setUser(res.data);
+
+            if (!res.success) {
+                toast.error(res.message);
+                return;
+            }
+
+            localStorage.setItem("user", JSON.stringify(res.data));
+            await props.setUser(res.data);
 
             toast.success('User successfully registered');
             navigate('/');
         } catch (error) {
-            toast.error('Something went wrong pleas try again');
+            console.log(error);
+            toast.error('Something went wrong please try again');
         }
     }
 
@@ -88,7 +96,7 @@ const Register = (props) => {
                     />
                     <label htmlFor="confirm_password">Confirm password</label>
                 </div>
-                <Link to='/login'>Don't have an account yet?</Link>
+                <Link to='/login'>Already have an account?</Link>
 
                 <button className="btn btn-primary w-100 py-2" type="submit">Sign up</button>
             </form>

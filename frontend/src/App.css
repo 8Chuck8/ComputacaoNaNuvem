@@ -5,6 +5,8 @@ html, body {
   overflow: hidden;
   font-family: Arial, sans-serif;
   background: #1e1e1e;
+  overflow-x: hidden; 
+  overflow-y: auto;
   color: white;
   box-sizing: border-box;
 }
@@ -44,6 +46,12 @@ html, body {
   grid-template-rows: repeat(20, 30px);
   gap: 2px;
   position: relative;
+}
+
+.modal {
+  z-index: 1050 !important;
+  display: block !important;
+  opacity: 1 !important;
 }
 
 .cell {

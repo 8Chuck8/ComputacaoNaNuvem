@@ -1,7 +1,4 @@
-import { create } from 'zustand';
-
-// Pega a URL da API do ficheiro .env (ex: VITE_API_URL=https://computacaonanuvem.onrender.com)
-const API_URL = import.meta.env.VITE_API_URL;
+import {create} from 'zustand'
 
 export const useAuthApi = create((set) => ({
     user: null,

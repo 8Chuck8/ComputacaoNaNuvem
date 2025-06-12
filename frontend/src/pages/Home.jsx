@@ -1,14 +1,12 @@
-import React from 'react'
-import Game from '../components/Game'
+import React from 'react';
+import Game from '../components/Game';
 
-const Home = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-
+const Home = ({ user }) => {
   return (
-    <>
+    <div>
       <Game user={user} />
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Home
+export default Home;

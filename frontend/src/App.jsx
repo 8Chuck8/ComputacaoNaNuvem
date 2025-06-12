@@ -1,9 +1,9 @@
 import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/dataTables.dataTables.css';
 import Navbar from './components/Navbar'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Admin from './pages/Admin'
 import Scores from './pages/Scores'
@@ -41,23 +41,32 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Home />}/>
-        
-        {
-          user ? <>
-              {
-                user.role === 'admin' &&
-                <Route path="/admin" element={<Admin />}/>
-              }
-              <Route path="/scores" element={<Scores user={user}/>}/>
-              <Route path="/logout" element={<Logout setUser={setUser}/>}/>
-          </>
-          : <>
-              <Route path="/login" element={<Login setUser={setUser}/>}/>
-              <Route path="/register" element={<Register setUser={setUser}/>}/>
-            </>
-        }
+        <Route 
+          path="/" 
+          element={user ? <Home user={user} /> : <Navigate replace to="/login" />} 
+        />
+        <Route
+          path="/login"
+          element={!user ? <Login setUser={setUser} /> : <Navigate replace to="/" />}
+        />
+        <Route
+          path="/register"
+          element={!user ? <Register setUser={setUser} /> : <Navigate replace to="/" />}
+        />
+        <Route
+          path="/logout"
+          element={user ? <Logout setUser={setUser} /> : <Navigate replace to="/login" />}
+        />
+        <Route
+          path="/scores"
+          element={user ? <Scores user={user} /> : <Navigate replace to="/login" />}
+        />
+        <Route
+          path="/admin"
+          element={user?.role === 'admin' ? <Admin /> : <Navigate replace to="/" />}
+        />
       </Routes>
+
     </>
   )
 }

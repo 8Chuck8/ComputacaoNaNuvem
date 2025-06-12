@@ -68,6 +68,7 @@ const DataTableComponent = (props) => {
         }
     };
 
+
     return (
         <> 
             <table ref={tableRef} className="table table-bordered table-striped display nowrap">
