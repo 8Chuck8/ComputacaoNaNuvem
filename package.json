@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./backend/server.js",
-    "start": "npm start",
+    "start": "node ./backend/server.js"
   },
   "keywords": [],
   "author": "",
