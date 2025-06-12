@@ -13,6 +13,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/question/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const answers = await Answer.find({ q_id: id });
+    res.status(200).json({ success: true, data: answers });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // POST nova resposta
 router.post('/', async (req, res) => {
   const { a_answer, a_correct, q_id } = req.body;
