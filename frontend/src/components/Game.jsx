@@ -58,8 +58,8 @@ export default function Game({ user }) {
   const iniciar = async () => {
     try {
       const [qRes, aRes] = await Promise.all([
-        fetch(`${API}/questions`),
-        fetch(`${API}/answers`)
+        fetch(`${API}/api/questions`),
+        fetch(`${API}/api/answers`)
       ]);
       const qs = await qRes.json();
       const as = await aRes.json();
