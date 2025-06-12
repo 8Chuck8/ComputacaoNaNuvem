@@ -1,12 +1,25 @@
 import $ from 'jquery';
 import { useEffect, useRef } from 'react';
+import toast from "react-hot-toast";
 
 const DataTableComponent = (props) => {
     const tableRef = useRef();
 
-    useEffect(() => {
+    const $table = $(tableRef.current);
+
+        if ($.fn.DataTable.isDataTable($table)) {
+        $table.DataTable().clear().destroy();
+        }
+        
         if (props.content_data && props.content_data.length > 0) {
+
             const table = $(tableRef.current).DataTable({
+                lengthChange: false,
+                order: false,
+                scrollX: true,      
+                scrollY: '400px',    
+                scrollCollapse: true,
+                paging: true,
                 lengthChange: false,
                 pageLength: 5
             });
@@ -22,6 +35,36 @@ const DataTableComponent = (props) => {
     const filteredHeaders = props.content_headers?.filter(
         (header) => !excludedHeaders.includes(header)
     );
+
+    const handleDeleteContent = async (id) => {
+        let endpoint = '';
+
+        if (props.type === 'user') {
+            endpoint = `/api/users/${id}`;
+        } else if (props.type === 'question') {
+            endpoint = `/api/questions/${id}`;
+        } else if (props.type === 'answer') {
+            endpoint = `/api/answers/${id}`;
+        } else {
+            toast.error("Unknown delete type");
+            return;
+        }
+
+        try {
+            const res = await fetch(endpoint, { method: "DELETE" });
+            const data = await res.json();
+            if (data.success) {
+            toast.success(`${props.type} deleted`);
+            window.location.reload();
+            props.onDataChanged?.(); 
+            } else {
+            toast.error(data.message || "Delete failed");
+            }
+        } catch (err) {
+            toast.error("Server error");
+            console.error(err);
+        }
+    };
 
     return (
         <> 
