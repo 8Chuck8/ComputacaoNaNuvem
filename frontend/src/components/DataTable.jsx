@@ -5,7 +5,9 @@ import toast from "react-hot-toast";
 const DataTableComponent = (props) => {
     const tableRef = useRef();
 
-    const $table = $(tableRef.current);
+    useEffect(() => {
+
+        const $table = $(tableRef.current);
 
         if ($.fn.DataTable.isDataTable($table)) {
         $table.DataTable().clear().destroy();
@@ -68,7 +70,7 @@ const DataTableComponent = (props) => {
 
     return (
         <> 
-            <table ref={tableRef} className="table table-bordered table-striped">
+            <table ref={tableRef} className="table table-bordered table-striped display nowrap">
                 <thead>
                     <tr>
                         {filteredHeaders && filteredHeaders.map((header, index) => (
@@ -90,15 +92,19 @@ const DataTableComponent = (props) => {
                                         </div>
                                     ) : (
                                         key.toLowerCase().includes('date')
-                                        ? new Date(content[key]).toLocaleDateString('en-GB') // formats as DD/MM/YYYY
+                                        ? new Date(content[key]).toLocaleDateString('en-GB')
                                         : content[key]
                                     )}
                                 </td>
                             ))}
-                            <td className="d-flex gap-2 justify-content-center">
-                                <button onClick={() => props.handleEditContent(content._id)} className="btn btn-warning">Edit</button>
-                                <button onClick={() => props.handleDeleteContent(content._id)} className="btn btn-danger">Delete</button>
+                            {(props.handleEditContent || props.handleDeleteContent) && (
+                            <td style={{ whiteSpace: 'nowrap' }}>
+                                <div className="d-flex gap-2 justify-content-center">
+                                    <button onClick={() => props.handleEditContent(content._id)} className="btn btn-warning">Edit</button>
+                                    <button onClick={() => handleDeleteContent(content._id)} className="btn btn-danger">Delete</button>
+                                </div>
                             </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
