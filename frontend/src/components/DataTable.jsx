@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 
 const DataTableComponent = (props) => {
     const tableRef = useRef();
-
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+    
     useEffect(() => {
 
         const $table = $(tableRef.current);
@@ -42,11 +43,11 @@ const DataTableComponent = (props) => {
         let endpoint = '';
 
         if (props.type === 'user') {
-            endpoint = `/api/users/${id}`;
+            endpoint = `${API}/api/users/${id}`;
         } else if (props.type === 'question') {
-            endpoint = `/api/questions/${id}`;
+            endpoint = `${API}/api/questions/${id}`;
         } else if (props.type === 'answer') {
-            endpoint = `/api/answers/${id}`;
+            endpoint = `${API}/api/answers/${id}`;
         } else {
             toast.error("Unknown delete type");
             return;
