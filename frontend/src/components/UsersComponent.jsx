@@ -11,6 +11,7 @@ const UsersComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("add");
   const [selectedUser, setSelectedUser] = useState(null);
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
   useEffect(() => {
     getUsers();
@@ -35,13 +36,13 @@ const UsersComponent = () => {
     try {
       let res;
       if (modalMode === "add") {
-        res = await fetch("/api/users", {
+        res = await fetch(`${API}/api/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
         });
       } else {
-        res = await fetch(`/api/users/${form._id}`, {
+        res = await fetch(`${API}/api/users/${form._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
