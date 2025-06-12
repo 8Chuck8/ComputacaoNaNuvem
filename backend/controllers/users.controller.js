@@ -34,8 +34,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ success: false, message: 'The login or password is incorrect' });
         }
 
-        // return res.status(200).json({ success: true, data: user });
-        return res.status(200).json({ success: true, data: { _id: user._id, username: user.username, email: user.email } });
+        return res.status(200).json({ success: true, data: { _id: user._id, username: user.username, email: user.email, role: user.role } });
     } catch (error) {
         console.error(`Login error: ${error}`);
         res.status(500).json({ success: false, message: 'Server error' });
@@ -48,8 +47,15 @@ export const login = async (req, res) => {
 export const createUser = async (req, res) => {
     const user = req.body;
 
+    const email = user.email;
     if (!user.username || !user.email || !user.password) {
         return res.status(400).json({ success: false, message: 'Please provide all fields' });
+    }
+    console.log("Attempting to register email:", user.email);
+    const existing_user = await User.findOne({ email: user.email });
+
+    if (existing_user) {
+        return res.status(400).json({ success: false, message: 'This email already registered' });
     }
 
     try {
@@ -70,20 +76,26 @@ export const createUser = async (req, res) => {
 
 
 export const deleteUser = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ success: false, message: 'User not found' })
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, message: 'Invalid user ID' });
+  }
+
+  try {
+    const deleted = await User.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    try {
-        await User.findByIdAndDelete(id);
-        res.status(200).json({ success: true, message: 'User successfuly deleted' });
-    } catch (error) {
-        console.log(`Error in deleting user: ${error}`);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
-}
+    res.status(200).json({ success: true, message: 'User successfully deleted' });
+  } catch (error) {
+    console.error(`Error deleting user: ${error}`);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
 
 export const updateUser = async (req, res) => {
     const { id } = req.params;
