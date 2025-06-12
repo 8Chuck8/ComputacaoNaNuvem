@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Scores = () => {
   const [scores, setScores] = useState([]);
 
@@ -7,7 +9,7 @@ const Scores = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user?._id) return;
 
-    fetch(`/api/scores/user/${user._id}`)
+    fetch(`${API_URL}/api/scores/user/${user._id}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) setScores(data.data);
