@@ -143,7 +143,7 @@ export default function Game({ user }) {
       setFeedback('');
       if (!indices.length) {
         clearInterval(intv);
-        await fetch(`${API}/scores`, {
+        await fetch(`${API}/api/scores`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
