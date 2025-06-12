@@ -6,7 +6,7 @@ export const useScoreApi = create((set) => ({
     scores: [],
     setScores: (scores) => set({ scores }),
     getScores: async () => {
-        const res = await fetch("${API_URL}/api/scores");
+        const res = await fetch(`${API_URL}/api/scores`);
         const data = await res.json();
         set({ scores: data.data });
     },
@@ -22,7 +22,7 @@ export const useScoreApi = create((set) => ({
             return { success: false, message: "Please provide all fields" };
         }
 
-        const res = await fetch("${API_URL}/api/scores", {
+        const res = await fetch(`${API_URL}/api/scores`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
