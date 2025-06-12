@@ -5,7 +5,8 @@
   "description": "Jogo didático para a disciplina de Computação na Nuvem",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./backend/server.js"
+    "dev": "nodemon ./backend/server.js",
+    "start": "npm start";
   },
   "keywords": [],
   "author": "",
