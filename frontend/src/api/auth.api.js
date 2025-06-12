@@ -4,44 +4,47 @@ import { create } from 'zustand';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useAuthApi = create((set) => ({
-  user: null,
+    user: null,
+    setUsers: (user) => set({user}),
+    login: async (email, password) => {
+        console.log("EMAIL", email);
+        console.log("PASSWORD", password);
 
-  setUsers: (user) => set({ user }),
+        const res = await fetch("/api/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
 
-  login: async (email, password) => {
-    console.log("EMAIL", email);
-    console.log("PASSWORD", password);
+        const data = await res.json();
+        if (res.ok) {
+            set({ user: data.data });
+        }
+        return data;
+    },
 
-    const res = await fetch(`${API_URL}/api/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    });
+    register: async (newUser) => {
+        if (!newUser.username || !newUser.email || !newUser.password) {
+            return {success: false, message: "Please provide all fields"};
+        }
 
-    const data = await res.json();
-    if (res.ok) {
-      set({ user: data.data });
+        const res = await fetch("/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify(newUser),
+        });
+
+        const data = await res.json();
+        console.log(data)
+        if (!data.success) {
+            return {success: false, data: newUser, message: "This email is already registered"};
+        }
+
+        set({ user: data.data });
+        return {success: true, data: newUser, message: "User created successfully"};
     }
-    return data;
-  },
-
-  register: async (newUser) => {
-    if (!newUser.username || !newUser.email || !newUser.password) {
-      return { success: false, message: "Please provide all fields" };
-    }
-
-    const res = await fetch(`${API_URL}/api/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newUser),
-    });
-
-    const data = await res.json();
-    set((state) => ({ user: [...(state.user || []), data.data] }));
-    return { success: true, data: newUser, message: "User created successfully" };
-  }
 }));
